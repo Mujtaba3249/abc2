@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Topaz — System Diagrams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#e9eaec;color:#000;font-family:'Inter',Arial,sans-serif}
+  .sheet{
+    width:1280px;min-height:900px;
+    margin:24px auto;background:#fff;
+    padding:48px 60px 64px 60px;
+    box-shadow:0 1px 0 rgba(0,0,0,.08), 0 12px 28px rgba(0,0,0,.08);
+    page-break-after:always;break-after:page;
+    position:relative;
+  }
+  h1{font-size:20px;font-weight:700;margin:0 0 4px 0;letter-spacing:.02em}
+  h2{font-size:18px;font-weight:700;margin:0 0 16px 0;text-align:center;text-transform:uppercase;letter-spacing:.06em}
+  .desc{font-size:12px;line-height:1.6;color:#222;margin:0 0 20px 0;max-width:1080px}
+  .foot{position:absolute;left:60px;right:60px;bottom:22px;display:flex;justify-content:space-between;
+    font-size:10.5px;color:#444;letter-spacing:.05em;border-top:.5px solid #bbb;padding-top:8px}
+
+  /* SVG common */
+  svg{display:block;width:100%;height:auto}
+  .stroke{fill:none;stroke:#000;stroke-width:1.4}
+  .stroke-thin{fill:none;stroke:#000;stroke-width:1}
+  .fill-w{fill:#fff;stroke:#000;stroke-width:1.4}
+  .arr{fill:#000}
+  .lbl{font-family:'Inter',Arial,sans-serif;font-size:13px;font-weight:600;fill:#000}
+  .lbl-s{font-family:'Inter',Arial,sans-serif;font-size:11.5px;font-weight:500;fill:#000}
+  .lbl-i{font-family:'Inter',Arial,sans-serif;font-size:12px;font-weight:500;font-style:italic;fill:#000}
+  .lbl-c{font-family:'Inter',Arial,sans-serif;font-size:13.5px;font-weight:600;fill:#000;text-anchor:middle}
+  .lbl-cs{font-family:'Inter',Arial,sans-serif;font-size:11.5px;font-weight:500;fill:#000;text-anchor:middle}
+  .lbl-id{font-family:'Inter',Arial,sans-serif;font-size:12px;fill:#000;text-anchor:middle;text-decoration:underline}
+  .lbl-attr{font-family:'Inter',Arial,sans-serif;font-size:11.5px;fill:#000;text-anchor:middle}
+
+  @page{size:A3 landscape;margin:14mm}
+  @media print{
+    html,body{background:#fff}
+    .sheet{margin:0;box-shadow:none;width:auto;min-height:auto;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- 1 · DFD LEVEL 0 (CONTEXT)                                    -->
+<!-- ============================================================ -->
+<section class="sheet">
+  <h2>Figure 1 — Context Diagram (DFD Level 0)</h2>
+  <p class="desc">The context diagram shows the Topaz Jewelry Platform as a single process (0) and its data exchanges with all external entities — clients, the admin team, partner workshops, the payment gateway, the notification service, and the shipping carrier. Each external entity is drawn with a stacked-paper outline; arrows are labelled with the data that flows along them.</p>
+
+  <svg viewBox="0 0 1180 820" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" class="arr"/>
+      </marker>
+    </defs>
+
+    <!-- Stacked paper helper symbol via reuse: define generator inline -->
+
+    <!-- CENTER process 0 (rounded rectangle) -->
+    <rect x="470" y="320" width="240" height="160" rx="14" ry="14" class="fill-w"/>
+    <line x1="470" y1="345" x2="710" y2="345" class="stroke-thin"/>
+    <text text-anchor="middle" x="590" y="338" class="lbl-c">0</text>
+    <text text-anchor="middle" x="590" y="412" class="lbl-c" font-size="15">Topaz</text>
+    <text text-anchor="middle" x="590" y="432" class="lbl-c" font-size="15">Jewelry Platform</text>
+
+    <!-- ============ EXTERNAL: CLIENT (left) ============ -->
+    <g transform="translate(50,300)">
+      <rect x="8" y="8" width="180" height="110" class="fill-w"/>
+      <rect x="4" y="4" width="180" height="110" class="fill-w"/>
+      <rect x="0" y="0" width="180" height="110" class="fill-w"/>
+      <text text-anchor="middle" x="90" y="62" class="lbl-c">Client</text>
+    </g>
+
+    <!-- ============ EXTERNAL: ADMIN (top-left) ============ -->
+    <g transform="translate(110,30)">
+      <rect x="8" y="8" width="170" height="90" class="fill-w"/>
+      <rect x="4" y="4" width="170" height="90" class="fill-w"/>
+      <rect x="0" y="0" width="170" height="90" class="fill-w"/>
+      <text text-anchor="middle" x="85" y="52" class="lbl-c">Admin</text>
+    </g>
+
+    <!-- ============ EXTERNAL: WORKSHOP (top-right) ============ -->
+    <g transform="translate(870,30)">
+      <rect x="8" y="8" width="190" height="90" class="fill-w"/>
+      <rect x="4" y="4" width="190" height="90" class="fill-w"/>
+      <rect x="0" y="0" width="190" height="90" class="fill-w"/>
+      <text text-anchor="middle" x="95" y="52" class="lbl-c">Workshop</text>
+    </g>
+
+    <!-- ============ EXTERNAL: PAYMENT GATEWAY (right) ============ -->
+    <g transform="translate(990,310)">
+      <rect x="8" y="8" width="170" height="100" class="fill-w"/>
+      <rect x="4" y="4" width="170" height="100" class="fill-w"/>
+      <rect x="0" y="0" width="170" height="100" class="fill-w"/>
+      <text text-anchor="middle" x="85" y="48" class="lbl-c">Payment</text>
+      <text text-anchor="middle" x="85" y="68" class="lbl-c">Gateway</text>
+    </g>
+
+    <!-- ============ EXTERNAL: NOTIFICATION (bottom-right) ============ -->
+    <g transform="translate(840,640)">
+      <rect x="8" y="8" width="190" height="90" class="fill-w"/>
+      <rect x="4" y="4" width="190" height="90" class="fill-w"/>
+      <rect x="0" y="0" width="190" height="90" class="fill-w"/>
+      <text text-anchor="middle" x="95" y="42" class="lbl-c">Notification</text>
+      <text text-anchor="middle" x="95" y="62" class="lbl-c">Service</text>
+    </g>
+
+    <!-- ============ EXTERNAL: SHIPPING (bottom-left) ============ -->
+    <g transform="translate(140,640)">
+      <rect x="8" y="8" width="180" height="90" class="fill-w"/>
+      <rect x="4" y="4" width="180" height="90" class="fill-w"/>
+      <rect x="0" y="0" width="180" height="90" class="fill-w"/>
+      <text text-anchor="middle" x="90" y="42" class="lbl-c">Shipping</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-c">Carrier</text>
+    </g>
+
+    <!-- ================== FLOWS: CLIENT ↔ SYSTEM ================== -->
+    <!-- Registration / Login -->
+    <line x1="238" y1="320" x2="470" y2="345" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="252" y="316" class="lbl-s">Registration / Login</text>
+
+    <!-- Browse / Search -->
+    <line x1="238" y1="345" x2="470" y2="368" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="252" y="362" class="lbl-s">Browse / Search Request</text>
+
+    <!-- Custom Design Request -->
+    <line x1="238" y1="370" x2="470" y2="392" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="252" y="388" class="lbl-s">Custom Design Request</text>
+
+    <!-- Order Placement -->
+    <line x1="238" y1="395" x2="470" y2="416" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="252" y="412" class="lbl-s">Order Placement</text>
+
+    <!-- Catalog Data (system → client) -->
+    <line x1="470" y1="440" x2="238" y2="440" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="252" y="436" class="lbl-s">Catalog &amp; 3D Preview</text>
+
+    <!-- Order Confirmation -->
+    <line x1="470" y1="465" x2="238" y2="465" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="252" y="460" class="lbl-s">Order Confirmation</text>
+
+    <!-- ================== FLOWS: ADMIN ↔ SYSTEM ================== -->
+    <line x1="240" y1="115" x2="490" y2="320" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="262" y="160" class="lbl-s">Manage Products</text>
+    <text text-anchor="middle" x="262" y="178" class="lbl-s">Approve/Reject Designs</text>
+
+    <line x1="490" y1="332" x2="240" y2="135" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="316" y="226" class="lbl-s">Reports / Analytics</text>
+
+    <!-- ================== FLOWS: SYSTEM ↔ WORKSHOP ================== -->
+    <line x1="690" y1="320" x2="940" y2="115" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="772" y="190" class="lbl-s">Production Job</text>
+
+    <line x1="940" y1="135" x2="690" y2="332" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="772" y="240" class="lbl-s">Status / Completion</text>
+
+    <!-- ================== FLOWS: SYSTEM ↔ PAYMENT GATEWAY ================== -->
+    <line x1="710" y1="370" x2="990" y2="345" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="800" y="362" class="lbl-s">Payment Details</text>
+
+    <line x1="990" y1="380" x2="710" y2="406" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="800" y="402" class="lbl-s">Payment Confirmation</text>
+
+    <line x1="990" y1="410" x2="710" y2="436" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="850" y="430" class="lbl-s">Receipt</text>
+
+    <!-- ================== FLOWS: SYSTEM ↔ NOTIFICATION ================== -->
+    <line x1="690" y1="468" x2="935" y2="640" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="780" y="540" class="lbl-s">Order &amp; Status Alerts</text>
+
+    <line x1="935" y1="660" x2="690" y2="488" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="710" y="610" class="lbl-s">Delivery Status</text>
+
+    <!-- ================== FLOWS: SYSTEM ↔ SHIPPING ================== -->
+    <line x1="490" y1="468" x2="240" y2="640" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="298" y="540" class="lbl-s">Dispatch Order</text>
+
+    <line x1="240" y1="660" x2="490" y2="488" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="278" y="610" class="lbl-s">Tracking Update</text>
+
+    <!-- Client → Payment via System: Payment Info pass-through -->
+    <line x1="138" y1="410" x2="50" y2="500" class="stroke-thin"/>
+    <line x1="50" y1="500" x2="50" y2="780" class="stroke-thin"/>
+    <line x1="50" y1="780" x2="500" y2="780" class="stroke-thin"/>
+    <line x1="500" y1="780" x2="500" y2="480" class="stroke" marker-end="url(#arr)"/>
+    <text text-anchor="middle" x="60" y="496" class="lbl-s">Payment Info</text>
+  </svg>
+
+  <div class="foot"><span>Topaz · Context Diagram</span><span>Page 1 of 4</span></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 2 · DFD LEVEL 1                                              -->
+<!-- ============================================================ -->
+<section class="sheet">
+  <h2>Figure 2 — Data Flow Diagram (Level 1)</h2>
+  <p class="desc">Level 1 decomposes the Topaz system into its seven core processes (1.0–7.0) and shows the data stores (D1–D6) they use. Numbered processes are drawn as rounded rectangles; data stores use the D-prefix box; external entities keep the stacked-paper style.</p>
+
+  <svg viewBox="0 0 1400 1180" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" class="arr"/>
+      </marker>
+    </defs>
+
+    <!-- ============ EXTERNAL: CLIENT (top center) ============ -->
+    <g transform="translate(600,20)">
+      <rect x="8" y="8" width="200" height="80" class="fill-w"/>
+      <rect x="4" y="4" width="200" height="80" class="fill-w"/>
+      <rect x="0" y="0" width="200" height="80" class="fill-w"/>
+      <text text-anchor="middle" x="100" y="48" class="lbl-c">Client</text>
+    </g>
+
+    <!-- D1 User DB (top right) -->
+    <g transform="translate(1160,30)">
+      <rect x="0" y="0" width="40" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="20" y="36" class="lbl-cs">D1</text>
+      <rect x="40" y="0" width="180" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="130" y="30" class="lbl-cs">User</text>
+      <text text-anchor="middle" x="130" y="48" class="lbl-cs">Database File</text>
+    </g>
+
+    <!-- ============ PROCESSES ============ -->
+    <!-- 1.0 Register / Authenticate -->
+    <g transform="translate(660,170)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">1.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Register /</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">Authenticate</text>
+    </g>
+
+    <!-- 2.0 Catalog & Search -->
+    <g transform="translate(900,170)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">2.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Catalog</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">&amp; Search</text>
+    </g>
+
+    <!-- 3.0 Custom Design Mgmt -->
+    <g transform="translate(420,170)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">3.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Custom Design</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">Management</text>
+    </g>
+
+    <!-- 4.0 Order Management (center) -->
+    <g transform="translate(660,430)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">4.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Order</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">Management</text>
+    </g>
+
+    <!-- 5.0 Payment Processing (right of 4.0) -->
+    <g transform="translate(950,430)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">5.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Payment</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">Processing</text>
+    </g>
+
+    <!-- 6.0 Production / Workshop -->
+    <g transform="translate(660,680)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">6.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Production /</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">Workshop Routing</text>
+    </g>
+
+    <!-- 7.0 Notification & Tracking (left of 4.0) -->
+    <g transform="translate(370,430)">
+      <rect width="180" height="80" rx="12" ry="12" class="fill-w"/>
+      <line x1="0" y1="22" x2="180" y2="22" class="stroke-thin"/>
+      <text text-anchor="middle" x="90" y="17" class="lbl-c">7.0</text>
+      <text text-anchor="middle" x="90" y="44" class="lbl-cs">Notification</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-cs">&amp; Tracking</text>
+    </g>
+
+    <!-- ============ DATA STORES ============ -->
+    <!-- D2 Product DB (right of 2.0) -->
+    <g transform="translate(1160,180)">
+      <rect x="0" y="0" width="40" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="20" y="36" class="lbl-cs">D2</text>
+      <rect x="40" y="0" width="180" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="130" y="30" class="lbl-cs">Product</text>
+      <text text-anchor="middle" x="130" y="48" class="lbl-cs">Database File</text>
+    </g>
+
+    <!-- D3 Custom Design DB (left of 3.0) -->
+    <g transform="translate(180,180)">
+      <rect x="0" y="0" width="40" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="20" y="36" class="lbl-cs">D3</text>
+      <rect x="40" y="0" width="180" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="130" y="30" class="lbl-cs">Custom Design</text>
+      <text text-anchor="middle" x="130" y="48" class="lbl-cs">Database File</text>
+    </g>
+
+    <!-- D4 Order DB (above 4.0, between 4.0 and Client) -->
+    <g transform="translate(880,330)">
+      <rect x="0" y="0" width="40" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="20" y="36" class="lbl-cs">D4</text>
+      <rect x="40" y="0" width="180" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="130" y="30" class="lbl-cs">Order</text>
+      <text text-anchor="middle" x="130" y="48" class="lbl-cs">Database File</text>
+    </g>
+
+    <!-- D5 Payment DB (right of 5.0) -->
+    <g transform="translate(1160,440)">
+      <rect x="0" y="0" width="40" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="20" y="36" class="lbl-cs">D5</text>
+      <rect x="40" y="0" width="180" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="130" y="30" class="lbl-cs">Payment</text>
+      <text text-anchor="middle" x="130" y="48" class="lbl-cs">Database File</text>
+    </g>
+
+    <!-- D6 Production Log (left of 6.0) -->
+    <g transform="translate(380,690)">
+      <rect x="0" y="0" width="40" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="20" y="36" class="lbl-cs">D6</text>
+      <rect x="40" y="0" width="180" height="60" class="fill-w"/>
+      <text text-anchor="middle" x="130" y="30" class="lbl-cs">Production</text>
+      <text text-anchor="middle" x="130" y="48" class="lbl-cs">Log File</text>
+    </g>
+
+    <!-- ============ EXTERNAL: WORKSHOP (bottom right) ============ -->
+    <g transform="translate(950,690)">
+      <rect x="8" y="8" width="180" height="80" class="fill-w"/>
+      <rect x="4" y="4" width="180" height="80" class="fill-w"/>
+      <rect x="0" y="0" width="180" height="80" class="fill-w"/>
+      <text text-anchor="middle" x="90" y="48" class="lbl-c">Workshop</text>
+    </g>
+
+    <!-- External Notification Service (left, beside 7.0) -->
+    <g transform="translate(60,440)">
+      <rect x="8" y="8" width="170" height="80" class="fill-w"/>
+      <rect x="4" y="4" width="170" height="80" class="fill-w"/>
+      <rect x="0" y="0" width="170" height="80" class="fill-w"/>
+      <text text-anchor="middle" x="85" y="42" class="lbl-c">Notification</text>
+      <text text-anchor="middle" x="85" y="62" class="lbl-c">Service</text>
+    </g>
+
+    <!-- External Payment Gateway (far right, below D5) -->
+    <g transform="translate(1180,580)">
+      <rect x="8" y="8" width="180" height="80" class="fill-w"/>
+      <rect x="4" y="4" width="180" height="80" class="fill-w"/>
+      <rect x="0" y="0" width="180" height="80" class="fill-w"/>
+      <text text-anchor="middle" x="90" y="42" class="lbl-c">Payment</text>
+      <text text-anchor="middle" x="90" y="62" class="lbl-c">Gateway</text>
+    </g>
+
+    <!-- External Admin (bottom left) -->
+    <g transform="translate(60,950)">
+      <rect x="8" y="8" width="170" height="80" class="fill-w"/>
+      <rect x="4" y="4" width="170" height="80" class="fill-w"/>
+      <rect x="0" y="0" width="170" height="80" class="fill-w"/>
+      <text text-anchor="middle" x="85" y="48" class="lbl-c">Admin</text>
+    </g>
+
+    <!-- ================ FLOWS ================ -->
+    <!-- Client → 1.0  Register Info -->
+    <line x1="720" y1="100" x2="732" y2="170" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="724" y="140" class="lbl-s">Register Info</text>
+
+    <!-- Client → 2.0  Product Search -->
+    <line x1="780" y1="100" x2="962" y2="170" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="868" y="140" class="lbl-s">Product Search</text>
+
+    <!-- Client → 3.0  Design Request -->
+    <line x1="650" y1="100" x2="540" y2="170" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="504" y="140" class="lbl-s">Design Request</text>
+
+    <!-- Client → 4.0  Purchase Request -->
+    <line x1="700" y1="100" x2="700" y2="430" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="706" y="280" class="lbl-s">Purchase Request</text>
+
+    <!-- 1.0 ↔ D1  (L-route up then right, around the top) -->
+    <line x1="840" y1="195" x2="880" y2="195" class="stroke-thin"/>
+    <line x1="880" y1="195" x2="880" y2="120" class="stroke-thin"/>
+    <line x1="880" y1="120" x2="1160" y2="120" class="stroke-thin"/>
+    <line x1="1160" y1="120" x2="1160" y2="60" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="950" y="114" class="lbl-s">User Record</text>
+
+    <!-- 2.0 ↔ D2 -->
+    <line x1="1080" y1="200" x2="1160" y2="205" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="1090" y="194" class="lbl-s">Lookup</text>
+    <line x1="1160" y1="225" x2="1080" y2="230" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="1086" y="248" class="lbl-s">Product Data</text>
+
+    <!-- 3.0 ↔ D3 -->
+    <line x1="420" y1="205" x2="360" y2="205" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="364" y="198" class="lbl-s">Save</text>
+    <line x1="360" y1="225" x2="420" y2="225" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="360" y="244" class="lbl-s">Approved</text>
+
+    <!-- 3.0 → 4.0  Approved design becomes order -->
+    <line x1="540" y1="250" x2="680" y2="430" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="548" y="340" class="lbl-s">Approved Design</text>
+
+    <!-- 4.0 ↔ D4 -->
+    <line x1="840" y1="450" x2="880" y2="385" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="848" y="410" class="lbl-s">Order Record</text>
+
+    <!-- 4.0 → 5.0  Payment Request -->
+    <line x1="840" y1="470" x2="950" y2="470" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="850" y="462" class="lbl-s">Payment Request</text>
+
+    <!-- 5.0 ↔ Payment Gateway -->
+    <line x1="1090" y1="510" x2="1240" y2="580" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="1100" y="560" class="lbl-s">Charge</text>
+    <line x1="1280" y1="580" x2="1130" y2="510" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="1180" y="540" class="lbl-s">Confirmation</text>
+
+    <!-- 5.0 ↔ D5 -->
+    <line x1="1130" y1="460" x2="1160" y2="460" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="1102" y="452" class="lbl-s">Receipt</text>
+
+    <!-- 5.0 → 4.0  Payment Confirmation -->
+    <line x1="950" y1="495" x2="840" y2="495" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="852" y="488" class="lbl-s">Payment Confirmed</text>
+
+    <!-- 4.0 → 6.0  Production Job -->
+    <line x1="750" y1="510" x2="750" y2="680" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="758" y="600" class="lbl-s">Production Job</text>
+
+    <!-- 6.0 ↔ Workshop -->
+    <line x1="840" y1="720" x2="950" y2="720" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="852" y="712" class="lbl-s">Job Brief</text>
+    <line x1="950" y1="745" x2="840" y2="745" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="852" y="762" class="lbl-s">Completion Status</text>
+
+    <!-- 6.0 ↔ D6 -->
+    <line x1="660" y1="720" x2="600" y2="720" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="586" y="712" class="lbl-s">Log</text>
+
+    <!-- 6.0 → 7.0  Status Update -->
+    <line x1="660" y1="700" x2="500" y2="510" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="540" y="620" class="lbl-s">Status Update</text>
+
+    <!-- 4.0 → 7.0  Order Status -->
+    <line x1="660" y1="470" x2="550" y2="470" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="562" y="462" class="lbl-s">Order Status</text>
+
+    <!-- 7.0 → Notification Service -->
+    <line x1="370" y1="480" x2="230" y2="480" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="248" y="472" class="lbl-s">Alert</text>
+
+    <!-- 7.0 → Client (Tracking) -->
+    <line x1="460" y1="430" x2="610" y2="100" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="464" y="310" class="lbl-s">Tracking / Alerts</text>
+
+    <!-- Admin → 4.0  Update Order Status (down + bottom trunk + up at x=750 into 4.0 from below) -->
+    <line x1="170" y1="1030" x2="170" y2="1080" class="stroke-thin"/>
+    <line x1="170" y1="1080" x2="750" y2="1080" class="stroke-thin"/>
+    <line x1="750" y1="1080" x2="750" y2="510" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="310" y="1074" class="lbl-s">Update Order Status</text>
+
+    <!-- Admin → 3.0  Approve / Reject Design (down + bottom trunk + up corridor x=620 into 3.0 right side) -->
+    <line x1="200" y1="1030" x2="200" y2="1100" class="stroke-thin"/>
+    <line x1="200" y1="1100" x2="620" y2="1100" class="stroke-thin"/>
+    <line x1="620" y1="1100" x2="620" y2="210" class="stroke-thin"/>
+    <line x1="620" y1="210" x2="600" y2="210" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="310" y="1094" class="lbl-s">Approve / Reject Design</text>
+
+    <!-- Admin → 2.0  Manage Products (down + bottom trunk + up far-right margin to D2 left edge) -->
+    <line x1="230" y1="1030" x2="230" y2="1060" class="stroke-thin"/>
+    <line x1="230" y1="1060" x2="1390" y2="1060" class="stroke-thin"/>
+    <line x1="1390" y1="1060" x2="1390" y2="210" class="stroke-thin"/>
+    <line x1="1390" y1="210" x2="1080" y2="210" class="stroke" marker-end="url(#arr2)"/>
+    <text text-anchor="middle" x="600" y="1054" class="lbl-s">Manage Products</text>
+  </svg>
+
+  <div class="foot"><span>Topaz · Data Flow Diagram (Level 1)</span><span>Page 2 of 4</span></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 3 · ERD                                                      -->
+<!-- ============================================================ -->
+<section class="sheet">
+  <h2>Figure 3 — Entity Relationship Diagram (ERD)</h2>
+  <p class="desc">Chen-style ERD for the Topaz platform. Rectangles are entities, ovals are attributes (underlined oval = primary key, double oval = multi-valued, dashed oval = derived, parenthesised = optional), diamonds are relationships. Cardinality is shown with the standard 1 / M / N notation on each connecting line.</p>
+
+  <svg viewBox="0 0 1350 1100" xmlns="http://www.w3.org/2000/svg">
+    <!-- =========== USER (left middle) =========== -->
+    <rect x="430" y="430" width="160" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="510" y="466" class="lbl-c">User</text>
+
+    <!-- User attributes -->
+    <ellipse cx="290" cy="380" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="290" y="384" class="lbl-id">UserID</text>
+    <line x1="350" y1="392" x2="430" y2="445" class="stroke-thin"/>
+
+    <ellipse cx="200" cy="450" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="200" y="454" class="lbl-attr">Username</text>
+    <line x1="260" y1="455" x2="430" y2="460" class="stroke-thin"/>
+
+    <ellipse cx="200" cy="510" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="200" y="514" class="lbl-attr">Password</text>
+    <line x1="260" y1="510" x2="430" y2="475" class="stroke-thin"/>
+
+    <ellipse cx="290" cy="560" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="290" y="564" class="lbl-attr">Email</text>
+    <line x1="350" y1="555" x2="430" y2="488" class="stroke-thin"/>
+
+    <ellipse cx="290" cy="615" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="290" y="619" class="lbl-attr">Phone</text>
+    <line x1="345" y1="608" x2="445" y2="490" class="stroke-thin"/>
+
+    <ellipse cx="180" cy="370" rx="78" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="374" class="lbl-attr">UserType (B/A/W)</text>
+    <line x1="252" y1="380" x2="430" y2="450" class="stroke-thin"/>
+
+    <!-- =========== PRODUCT (right top) =========== -->
+    <rect x="800" y="170" width="160" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="880" y="206" class="lbl-c">Product</text>
+
+    <ellipse cx="740" cy="100" rx="64" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="740" y="104" class="lbl-id">ProductID</text>
+    <line x1="780" y1="118" x2="830" y2="170" class="stroke-thin"/>
+
+    <ellipse cx="900" cy="80" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="900" y="84" class="lbl-attr">Name</text>
+    <line x1="900" y1="102" x2="890" y2="170" class="stroke-thin"/>
+
+    <ellipse cx="1050" cy="110" rx="62" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1050" y="114" class="lbl-attr">Category</text>
+    <line x1="1000" y1="125" x2="950" y2="172" class="stroke-thin"/>
+
+    <ellipse cx="1020" cy="180" rx="56" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1080" y="184" class="lbl-attr">Material</text>
+    <line x1="1024" y1="184" x2="960" y2="195" class="stroke-thin"/>
+
+    <ellipse cx="1020" cy="240" rx="56" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1080" y="244" class="lbl-attr">Price</text>
+    <line x1="1024" y1="240" x2="960" y2="220" class="stroke-thin"/>
+
+    <ellipse cx="1010" cy="290" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1010" y="294" class="lbl-attr">Stock</text>
+    <line x1="958" y1="288" x2="940" y2="232" class="stroke-thin"/>
+
+    <!-- =========== ORDER (center) =========== -->
+    <rect x="540" y="700" width="160" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="620" y="736" class="lbl-c">Order</text>
+
+    <ellipse cx="430" cy="700" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="430" y="704" class="lbl-id">OrderID</text>
+    <line x1="488" y1="708" x2="540" y2="722" class="stroke-thin"/>
+
+    <ellipse cx="430" cy="760" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="430" y="764" class="lbl-attr">OrderDate</text>
+    <line x1="488" y1="760" x2="540" y2="740" class="stroke-thin"/>
+
+    <ellipse cx="430" cy="820" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="430" y="824" class="lbl-attr">Status</text>
+    <line x1="488" y1="816" x2="546" y2="760" class="stroke-thin"/>
+
+    <!-- Total = derived (dashed oval) -->
+    <ellipse cx="620" cy="830" rx="60" ry="22" class="fill-w" style="stroke-dasharray:4 3"/>
+    <text text-anchor="middle" x="620" y="834" class="lbl-attr">Total</text>
+    <line x1="620" y1="808" x2="620" y2="760" class="stroke-thin"/>
+
+    <ellipse cx="800" cy="820" rx="78" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="800" y="824" class="lbl-attr">ShippingAddress</text>
+    <line x1="730" y1="816" x2="694" y2="760" class="stroke-thin"/>
+
+    <!-- =========== CUSTOM_DESIGN (left bottom) =========== -->
+    <rect x="120" y="780" width="170" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="205" y="816" class="lbl-c">CustomDesign</text>
+
+    <ellipse cx="60" cy="720" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="60" y="724" class="lbl-id">DesignID</text>
+    <line x1="118" y1="734" x2="155" y2="780" class="stroke-thin"/>
+
+    <ellipse cx="60" cy="790" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="60" y="794" class="lbl-attr">Description</text>
+    <line x1="118" y1="794" x2="120" y2="800" class="stroke-thin"/>
+
+    <ellipse cx="60" cy="860" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="60" y="864" class="lbl-attr">ImageURL</text>
+    <line x1="118" y1="852" x2="135" y2="836" class="stroke-thin"/>
+
+    <ellipse cx="180" cy="900" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="904" class="lbl-attr">Status</text>
+    <line x1="180" y1="878" x2="195" y2="840" class="stroke-thin"/>
+
+    <ellipse cx="280" cy="900" rx="64" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="280" y="904" class="lbl-attr">SubmittedAt</text>
+    <line x1="270" y1="878" x2="240" y2="840" class="stroke-thin"/>
+
+    <!-- =========== PAYMENT (right bottom) =========== -->
+    <rect x="900" y="780" width="160" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="980" y="816" class="lbl-c">Payment</text>
+
+    <ellipse cx="850" cy="720" rx="64" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="850" y="724" class="lbl-id">PaymentID</text>
+    <line x1="908" y1="734" x2="940" y2="780" class="stroke-thin"/>
+
+    <ellipse cx="990" cy="700" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="990" y="704" class="lbl-attr">Amount</text>
+    <line x1="990" y1="722" x2="990" y2="780" class="stroke-thin"/>
+
+    <ellipse cx="1110" cy="730" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1110" y="734" class="lbl-attr">Method</text>
+    <line x1="1054" y1="740" x2="1024" y2="785" class="stroke-thin"/>
+
+    <ellipse cx="1110" cy="800" rx="56" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1110" y="804" class="lbl-attr">Status</text>
+    <line x1="1054" y1="800" x2="1060" y2="800" class="stroke-thin"/>
+
+    <ellipse cx="1110" cy="870" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1110" y="874" class="lbl-attr">TxnRef</text>
+    <line x1="1054" y1="858" x2="1058" y2="836" class="stroke-thin"/>
+
+    <ellipse cx="990" cy="890" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="990" y="894" class="lbl-attr">PayDate</text>
+    <line x1="990" y1="868" x2="980" y2="840" class="stroke-thin"/>
+
+    <!-- =========== WORKSHOP (top right corner) =========== -->
+    <rect x="880" y="430" width="160" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="960" y="466" class="lbl-c">Workshop</text>
+
+    <ellipse cx="1020" cy="370" rx="68" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1080" y="374" class="lbl-id">WorkshopID</text>
+    <line x1="1042" y1="390" x2="1020" y2="430" class="stroke-thin"/>
+
+    <ellipse cx="1140" cy="460" rx="70" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1140" y="464" class="lbl-attr">Name</text>
+    <line x1="1140" y1="460" x2="1100" y2="460" class="stroke-thin"/>
+
+    <ellipse cx="1140" cy="520" rx="70" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1140" y="524" class="lbl-attr">Contact</text>
+    <line x1="1136" y1="512" x2="1100" y2="480" class="stroke-thin"/>
+
+    <!-- =========== REVIEW (top center) =========== -->
+    <rect x="500" y="220" width="160" height="60" class="fill-w"/>
+    <text text-anchor="middle" x="580" y="256" class="lbl-c">Review</text>
+
+    <ellipse cx="430" cy="170" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="430" y="174" class="lbl-id">ReviewID</text>
+    <line x1="488" y1="188" x2="525" y2="220" class="stroke-thin"/>
+
+    <ellipse cx="600" cy="150" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="600" y="154" class="lbl-attr">Rating</text>
+    <line x1="600" y1="172" x2="590" y2="220" class="stroke-thin"/>
+
+    <ellipse cx="720" cy="180" rx="68" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="720" y="184" class="lbl-attr">(Comment)</text>
+    <line x1="660" y1="200" x2="650" y2="225" class="stroke-thin"/>
+
+    <ellipse cx="490" cy="120" rx="60" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="490" y="124" class="lbl-attr">CreatedAt</text>
+    <line x1="510" y1="142" x2="540" y2="220" class="stroke-thin"/>
+
+    <!-- =========== RELATIONSHIPS (diamonds) =========== -->
+    <!-- User — Places — Order -->
+    <polygon points="540,580 600,560 660,580 600,600" class="fill-w"/>
+    <text text-anchor="middle" x="600" y="584" class="lbl-cs">Places</text>
+    <line x1="510" y1="490" x2="565" y2="568" class="stroke-thin"/>
+    <text text-anchor="middle" x="520" y="540" class="lbl-cs">1</text>
+    <line x1="630" y1="600" x2="620" y2="700" class="stroke-thin"/>
+    <text text-anchor="middle" x="638" y="650" class="lbl-cs">M</text>
+
+    <!-- Order — Contains — Product -->
+    <polygon points="700,470 760,450 820,470 760,490" class="fill-w"/>
+    <text text-anchor="middle" x="760" y="474" class="lbl-cs">Contains</text>
+    <line x1="690" y1="695" x2="745" y2="492" class="stroke-thin"/>
+    <text text-anchor="middle" x="708" y="610" class="lbl-cs">M</text>
+    <line x1="790" y1="452" x2="850" y2="230" class="stroke-thin"/>
+    <text text-anchor="middle" x="830" y="350" class="lbl-cs">N</text>
+
+    <!-- Order — Pays — Payment  (shifted down so Contains/Order-area connectors clear it) -->
+    <polygon points="780,860 840,840 900,860 840,880" class="fill-w"/>
+    <text text-anchor="middle" x="840" y="864" class="lbl-cs">Pays</text>
+    <line x1="700" y1="760" x2="780" y2="860" class="stroke-thin"/>
+    <text text-anchor="middle" x="724" y="820" class="lbl-cs">1</text>
+    <line x1="900" y1="860" x2="960" y2="840" class="stroke-thin"/>
+    <text text-anchor="middle" x="918" y="846" class="lbl-cs">1</text>
+
+    <!-- User — Submits — CustomDesign -->
+    <polygon points="290,680 350,660 410,680 350,700" class="fill-w"/>
+    <text text-anchor="middle" x="350" y="684" class="lbl-cs">Submits</text>
+    <line x1="475" y1="490" x2="386" y2="666" class="stroke-thin"/>
+    <text text-anchor="middle" x="426" y="600" class="lbl-cs">1</text>
+    <line x1="320" y1="700" x2="220" y2="780" class="stroke-thin"/>
+    <text text-anchor="middle" x="244" y="746" class="lbl-cs">M</text>
+
+    <!-- Workshop — Fulfils — Order -->
+    <polygon points="780,580 840,560 900,580 840,600" class="fill-w"/>
+    <text text-anchor="middle" x="840" y="584" class="lbl-cs">Fulfils</text>
+    <line x1="940" y1="490" x2="876" y2="568" class="stroke-thin"/>
+    <text text-anchor="middle" x="900" y="528" class="lbl-cs">1</text>
+    <line x1="810" y1="600" x2="700" y2="700" class="stroke-thin"/>
+    <text text-anchor="middle" x="746" y="650" class="lbl-cs">M</text>
+
+    <!-- User — Writes — Review -->
+    <polygon points="520,360 580,340 640,360 580,380" class="fill-w"/>
+    <text text-anchor="middle" x="580" y="364" class="lbl-cs">Writes</text>
+    <line x1="540" y1="430" x2="568" y2="380" class="stroke-thin"/>
+    <text text-anchor="middle" x="540" y="404" class="lbl-cs">1</text>
+    <line x1="580" y1="340" x2="580" y2="280" class="stroke-thin"/>
+    <text text-anchor="middle" x="588" y="312" class="lbl-cs">M</text>
+
+    <!-- Product — RatedIn — Review -->
+    <polygon points="740,290 800,270 860,290 800,310" class="fill-w"/>
+    <text text-anchor="middle" x="800" y="294" class="lbl-cs">RatedIn</text>
+    <line x1="800" y1="270" x2="850" y2="230" class="stroke-thin"/>
+    <text text-anchor="middle" x="844" y="260" class="lbl-cs">1</text>
+    <line x1="740" y1="290" x2="660" y2="265" class="stroke-thin"/>
+    <text text-anchor="middle" x="694" y="294" class="lbl-cs">M</text>
+
+    <!-- CustomDesign — BecomesPart Of — Order  (moved further down to clear OrderDate attribute) -->
+    <polygon points="320,890 380,870 440,890 380,910" class="fill-w"/>
+    <text text-anchor="middle" x="380" y="887" class="lbl-cs">Becomes</text>
+    <text text-anchor="middle" x="380" y="901" class="lbl-cs">PartOf</text>
+    <line x1="290" y1="880" x2="320" y2="890" class="stroke-thin"/>
+    <text text-anchor="middle" x="306" y="876" class="lbl-cs">1</text>
+    <line x1="440" y1="890" x2="540" y2="760" class="stroke-thin"/>
+    <text text-anchor="middle" x="492" y="844" class="lbl-cs">1</text>
+  </svg>
+
+  <div class="foot"><span>Topaz · Entity Relationship Diagram</span><span>Page 3 of 4</span></div>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 4 · ACTIVITY DIAGRAM                                         -->
+<!-- ============================================================ -->
+<section class="sheet">
+  <h2>Figure 4 — Activity Diagram: Order &amp; Custom Design Flow</h2>
+  <p class="desc">UML activity diagram for the end-to-end client journey on Topaz: from registration through browsing, custom design (with admin approval), checkout, payment, workshop production, and delivery. Black bars are fork/join nodes; diamonds are decisions; rounded rectangles are activities.</p>
+
+  <svg viewBox="0 0 1180 1500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" class="arr"/>
+      </marker>
+    </defs>
+
+    <!-- Swimlanes background -->
+    <rect x="40"  y="50" width="280" height="1420" class="stroke-thin" fill="#fafafa"/>
+    <rect x="320" y="50" width="280" height="1420" class="stroke-thin" fill="#fff"/>
+    <rect x="600" y="50" width="280" height="1420" class="stroke-thin" fill="#fafafa"/>
+    <rect x="880" y="50" width="260" height="1420" class="stroke-thin" fill="#fff"/>
+
+    <text text-anchor="middle" x="180" y="78" class="lbl-c">Client</text>
+    <text text-anchor="middle" x="460" y="78" class="lbl-c">System</text>
+    <text text-anchor="middle" x="740" y="78" class="lbl-c">Admin</text>
+    <text text-anchor="middle" x="1010" y="78" class="lbl-c">Workshop / Payment</text>
+    <line x1="40" y1="92" x2="1140" y2="92" class="stroke-thin"/>
+
+    <!-- ============ START (filled circle) — Client ============ -->
+    <circle cx="180" cy="125" r="11" fill="#000"/>
+
+    <!-- 1. Register / Login (client) -->
+    <rect x="100" y="160" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="190" class="lbl-c">Register / Login</text>
+    <line x1="180" y1="136" x2="180" y2="160" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Decision: account valid? -->
+    <polygon points="180,238 220,275 180,312 140,275" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="278" class="lbl-cs">valid?</text>
+    <line x1="180" y1="210" x2="180" y2="238" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- branch back: invalid → Register/Login -->
+    <line x1="140" y1="275" x2="60" y2="275" class="stroke-thin"/>
+    <line x1="60" y1="275" x2="60" y2="185" class="stroke-thin"/>
+    <line x1="60" y1="185" x2="100" y2="185" class="stroke" marker-end="url(#arr3)"/>
+    <text text-anchor="middle" x="68" y="262" class="lbl-s">[no]</text>
+
+    <!-- 2. Browse Catalog -->
+    <rect x="100" y="340" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="370" class="lbl-c">Browse Catalog</text>
+    <line x1="180" y1="312" x2="180" y2="340" class="stroke" marker-end="url(#arr3)"/>
+    <text text-anchor="middle" x="186" y="332" class="lbl-s">[yes]</text>
+
+    <!-- Decision: Custom design? -->
+    <polygon points="180,418 230,460 180,502 130,460" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="458" class="lbl-cs">custom?</text>
+    <line x1="180" y1="390" x2="180" y2="418" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- 3a. Submit Custom Design [yes] -->
+    <rect x="100" y="540" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="570" class="lbl-c">Submit Custom</text>
+    <line x1="180" y1="502" x2="180" y2="540" class="stroke" marker-end="url(#arr3)"/>
+    <text text-anchor="middle" x="186" y="525" class="lbl-s">[yes]</text>
+
+    <!-- → System: Save Design Request -->
+    <rect x="380" y="540" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="460" y="570" class="lbl-c">Save Request</text>
+    <line x1="260" y1="565" x2="380" y2="565" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- → Admin: Review Design -->
+    <rect x="660" y="540" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="740" y="570" class="lbl-c">Review Design</text>
+    <line x1="540" y1="565" x2="660" y2="565" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Admin decision approve? -->
+    <polygon points="740,618 790,660 740,702 690,660" class="fill-w"/>
+    <text text-anchor="middle" x="740" y="658" class="lbl-cs">approve?</text>
+    <line x1="740" y1="590" x2="740" y2="618" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Reject path: [no] → Reject & Notify, then loop back to client to revise -->
+    <rect x="660" y="730" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="740" y="760" class="lbl-c">Reject &amp; Notify</text>
+    <line x1="740" y1="702" x2="740" y2="730" class="stroke" marker-end="url(#arr3)"/>
+    <text text-anchor="middle" x="746" y="722" class="lbl-s">[no]</text>
+
+    <!-- loop back to client to revise -->
+    <line x1="660" y1="755" x2="180" y2="755" class="stroke-thin"/>
+    <line x1="180" y1="755" x2="180" y2="590" class="stroke" marker-end="url(#arr3)"/>
+    <text text-anchor="middle" x="190" y="752" class="lbl-s">revise</text>
+
+    <!-- approve [yes] continues DOWN past the diamond to merge -->
+    <line x1="790" y1="660" x2="880" y2="660" class="stroke-thin"/>
+    <line x1="880" y1="660" x2="880" y2="870" class="stroke-thin"/>
+    <text text-anchor="middle" x="796" y="652" class="lbl-s">[yes]</text>
+
+    <!-- 3b. (no) skip merge: Browse → Add to Cart -->
+    <line x1="230" y1="460" x2="280" y2="460" class="stroke-thin"/>
+    <line x1="280" y1="460" x2="280" y2="850" class="stroke-thin"/>
+    <text text-anchor="middle" x="240" y="450" class="lbl-s">[no]</text>
+
+    <!-- Merge node (diamond) before "Add to Cart" -->
+    <polygon points="180,830 220,870 180,910 140,870" class="fill-w"/>
+
+    <!-- arrows into merge: from approved-custom-design branch + from no-custom branch -->
+    <line x1="880" y1="870" x2="220" y2="870" class="stroke" marker-end="url(#arr3)"/>
+    <line x1="280" y1="850" x2="180" y2="850" class="stroke-thin"/>
+    <line x1="180" y1="850" x2="180" y2="830" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- 4. Add to Cart / Configure -->
+    <rect x="100" y="945" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="966" class="lbl-c">Add to Cart /</text>
+    <text text-anchor="middle" x="180" y="982" class="lbl-c">Configure</text>
+    <line x1="180" y1="910" x2="180" y2="945" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- 5. Checkout (system) -->
+    <rect x="380" y="945" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="460" y="975" class="lbl-c">Create Order</text>
+    <line x1="260" y1="970" x2="380" y2="970" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- 6. Payment Gateway (workshop/payment lane) -->
+    <rect x="940" y="945" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1020" y="975" class="lbl-c">Charge Payment</text>
+    <line x1="540" y1="970" x2="940" y2="970" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Decision: payment ok? -->
+    <polygon points="1020,1020 1075,1062 1020,1104 965,1062" class="fill-w"/>
+    <text text-anchor="middle" x="1020" y="1060" class="lbl-cs">ok?</text>
+    <line x1="1020" y1="995" x2="1020" y2="1020" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Fail loop -->
+    <line x1="1075" y1="1062" x2="1130" y2="1062" class="stroke-thin"/>
+    <line x1="1130" y1="1062" x2="1130" y2="970" class="stroke-thin"/>
+    <line x1="1130" y1="970" x2="1100" y2="970" class="stroke" marker-end="url(#arr3)"/>
+    <text text-anchor="middle" x="1085" y="1052" class="lbl-s">[no]</text>
+
+    <!-- Fork after payment ok -->
+    <rect x="900" y="1140" width="240" height="8" fill="#000"/>
+    <text text-anchor="middle" x="1024" y="1124" class="lbl-s">[yes]</text>
+    <line x1="1020" y1="1104" x2="1020" y2="1140" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- After fork, two parallel: Notify Client (system lane) + Send Job to Workshop -->
+    <rect x="380" y="1180" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="460" y="1210" class="lbl-c">Notify Client</text>
+    <line x1="940" y1="1144" x2="460" y2="1180" class="stroke" marker-end="url(#arr3)"/>
+
+    <rect x="940" y="1180" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1020" y="1205" class="lbl-c">Send Job to</text>
+    <text text-anchor="middle" x="1020" y="1222" class="lbl-c">Workshop</text>
+    <line x1="1020" y1="1148" x2="1020" y2="1180" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Workshop: Produce -->
+    <rect x="940" y="1260" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1020" y="1290" class="lbl-c">Produce Item</text>
+    <line x1="1020" y1="1230" x2="1020" y2="1260" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Workshop: Ship -->
+    <rect x="940" y="1340" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="1020" y="1370" class="lbl-c">Ship Item</text>
+    <line x1="1020" y1="1310" x2="1020" y2="1340" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Client: Receive Item -->
+    <rect x="100" y="1340" width="160" height="50" rx="22" ry="22" class="fill-w"/>
+    <text text-anchor="middle" x="180" y="1370" class="lbl-c">Receive Item</text>
+    <line x1="940" y1="1365" x2="260" y2="1365" class="stroke" marker-end="url(#arr3)"/>
+
+    <!-- Join bar -->
+    <rect x="100" y="1410" width="1000" height="8" fill="#000"/>
+    <line x1="180" y1="1390" x2="180" y2="1410" class="stroke-thin"/>
+    <line x1="460" y1="1230" x2="460" y2="1410" class="stroke-thin"/>
+    <line x1="1020" y1="1390" x2="1020" y2="1410" class="stroke-thin"/>
+
+    <!-- End node -->
+    <circle cx="600" cy="1450" r="11" fill="#fff" stroke="#000" stroke-width="1.4"/>
+    <circle cx="600" cy="1450" r="6" fill="#000"/>
+    <line x1="600" y1="1418" x2="600" y2="1438" class="stroke" marker-end="url(#arr3)"/>
+  </svg>
+
+  <div class="foot"><span>Topaz · Activity Diagram</span><span>Page 4 of 4</span></div>
+</section>
+
+</body>
+</html>
